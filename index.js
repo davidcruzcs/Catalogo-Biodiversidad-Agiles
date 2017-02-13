@@ -24,6 +24,8 @@ app.post('/user', function (req, res) {
     var city = req.body.city;
     var email = req.body.email;
     var interests = req.body.interests;
+    var password = req.body.password;
+
 
     // Get a Postgres client from the connection pool
     pg.connect(connectionString, (err, client, done) => {
@@ -37,7 +39,7 @@ app.post('/user', function (req, res) {
             });
         }
         // SQL Query > Insert Data
-        client.query('INSERT INTO public.user (names, lastnames, country, city, email, interests) VALUES ($1, $2, $3, $4, $5, $6)', [names, lastnames, country, city, email, interests]);
+        client.query('INSERT INTO public.user (names, lastnames, country, city, email, interests, password) VALUES ($1, $2, $3, $4, $5, $6, $7)', [names, lastnames, country, city, email, interests, password]);
 
         res.send("Usuario Agregado!");
     });
