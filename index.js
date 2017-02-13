@@ -56,6 +56,36 @@ app.post('/user', function (req, res) {
 });
 
 
+app.get('/categorias', function (req, res) {
+
+    const results = [];
+    // Get a Postgres client from the connection pool
+    pg.connect(connectionString, (err, client, done) => {
+        // Handle connection errors
+        if (err) {
+            done();
+            console.log(err);
+            return res.status(500).json({
+                success: false,
+                data: err
+            });
+        }
+        // SQL Query > Select Data
+        const query = client.query('SELECT * FROM categorias ORDER BY id ASC;');
+        // Stream results back one row at a time
+        query.on('row', (row) => {
+            results.push(row);
+        });
+        // After all data is returned, close connection and return results
+        query.on('end', () => {
+            done();
+            res.send(results);
+        });
+    });
+
+});
+
+
 app.listen(app.get('port'), function () {
     console.log('Node app is running on port', app.get('port'));
 });
