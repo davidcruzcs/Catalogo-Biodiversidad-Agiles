@@ -1,0 +1,28 @@
+{
+  "name": "catalogobiodiversidad",
+  "version": "1.0.0",
+  "description": "Aplicación de apropiación tecnológica de la materia Procesos ágiles de desarrollo",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/juandavidcruzs/Catalogo-Biodiversidad-Agiles.git"
+  },
+  "keywords": [
+    "Procesos",
+    "Agiles",
+    "NodeJS",
+    "Grupo6"
+  ],
+  "author": "Grupo 6",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/juandavidcruzs/Catalogo-Biodiversidad-Agiles/issues"
+  },
+  "homepage": "https://github.com/juandavidcruzs/Catalogo-Biodiversidad-Agiles#readme",
+  "dependencies": {
+    "express": "^4.14.1"
+  }
+}
