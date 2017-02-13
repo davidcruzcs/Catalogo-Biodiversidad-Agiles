@@ -66,7 +66,7 @@ app.post('/user/login', function (req, res) {
             });
         }
         // SQL Query > Select Data
-        const query = client.query('SELECT * FROM user WHERE email=$1 AND password=$2;', [email, password]);
+        const query = client.query('SELECT * FROM public.user WHERE email=$1 AND password=$2;', [email, password]);
         // Stream results back one row at a time
         query.on('row', (row) => {
             results.push(row);
