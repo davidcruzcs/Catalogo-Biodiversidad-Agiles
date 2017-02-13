@@ -148,6 +148,32 @@ app.get('/categories', function (req, res) {
 });
 
 
+app.post('/comment', function (req, res) {
+
+    var comment = req.body.comment;
+    var specie_id = req.body.specie_id;
+    var email = req.body.email;
+
+
+    // Get a Postgres client from the connection pool
+    pg.connect(connectionString, (err, client, done) => {
+        // Handle connection errors
+        if (err) {
+            done();
+            console.log(err);
+            return res.status(500).json({
+                success: false,
+                data: err
+            });
+        }
+        // SQL Query > Insert Data
+        client.query('INSERT INTO comments (comment, specie_id, email) VALUES ($1, $2, $3)', [comment, specie_id, email]);
+
+        res.send("Comentario Agregado!");
+    });
+
+
+});
 
 app.listen(app.get('port'), function () {
     console.log('Node app is running on port', app.get('port'));
