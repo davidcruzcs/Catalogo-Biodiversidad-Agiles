@@ -38,7 +38,7 @@ app.post('/user', function (req, res) {
             });
         }
         // SQL Query > Insert Data
-        client.query('INSERT INTO user(names, lastnames, country, city, email, interests) values($1, $2, $3, $4, $5, $6)', [names, lastnames, country, city, email, interests]);
+        client.query('INSERT INTO user (names, lastnames, country, city, email, interests) VALUES ($1, $2, $3, $4, $5, $6)', [names, lastnames, country, city, email, interests]);
         // SQL Query > Select Data
         const query = client.query('SELECT * FROM user ORDER BY id ASC');
         // Stream results back one row at a time
