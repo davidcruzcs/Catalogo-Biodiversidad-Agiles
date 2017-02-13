@@ -48,6 +48,46 @@ app.post('/user', function (req, res) {
 });
 
 
+app.post('/user/login', function (req, res) {
+
+    var email = req.body.email;
+    var password = req.body.password;
+
+    var results = [];
+
+    pg.connect(connectionString, (err, client, done) => {
+        // Handle connection errors
+        if (err) {
+            done();
+            console.log(err);
+            return res.status(500).json({
+                success: false,
+                data: err
+            });
+        }
+        // SQL Query > Select Data
+        const query = client.query('SELECT * FROM user WHERE email=$1 AND password=$2;', [email, password]);
+        // Stream results back one row at a time
+        query.on('row', (row) => {
+            results.push(row);
+        });
+        // After all data is returned, close connection and return results
+        query.on('end', () => {
+            done();
+            if (results.length == 0) {
+                return res.status(403).json({
+                    success: false,
+                    data: err
+                });
+            } else {
+                res.send('867ty23ehd8');
+            }
+        });
+    });
+
+
+});
+
 app.get('/categories', function (req, res) {
 
     const results = [];
