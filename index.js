@@ -47,6 +47,36 @@ app.post('/user', function (req, res) {
 
 });
 
+app.post('/user/update', function (req, res) {
+
+    var id = req.body.id;
+    var names = req.body.names;
+    var lastnames = req.body.lastnames;
+    var country = req.body.country;
+    var city = req.body.city;
+    var email = req.body.email;
+    var interests = req.body.interests;
+    var password = req.body.password;
+
+    // Get a Postgres client from the connection pool
+    pg.connect(connectionString, (err, client, done) => {
+        // Handle connection errors
+        if (err) {
+            done();
+            console.log(err);
+            return res.status(500).json({
+                success: false,
+                data: err
+            });
+        }
+        // SQL Query > Insert Data
+        client.query('UPDATE public.user SET names=($1), lastnames=($2), country=($3), city=($4), email=($5), interests=($6), password=($7) WHERE id=($8)', [names, lastnames, country, city, email, interests, password, id]);
+
+        res.send("Usuario Actualizado!");
+    });
+
+});
+
 
 app.post('/user/login', function (req, res) {
 
