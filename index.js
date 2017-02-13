@@ -56,7 +56,7 @@ app.post('/user', function (req, res) {
 });
 
 
-app.get('/categorias', function (req, res) {
+app.get('/categories', function (req, res) {
 
     const results = [];
     // Get a Postgres client from the connection pool
@@ -71,7 +71,7 @@ app.get('/categorias', function (req, res) {
             });
         }
         // SQL Query > Select Data
-        const query = client.query('SELECT * FROM categorias ORDER BY id ASC;');
+        const query = client.query('SELECT * FROM categories ORDER BY id ASC;');
         // Stream results back one row at a time
         query.on('row', (row) => {
             results.push(row);
