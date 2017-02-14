@@ -5,8 +5,6 @@ const pg = require('pg');
 const path = require('path');
 const connectionString = process.env.DATABASE_URL || 'postgres://localhost:5432/todo'
 
-console.log(connectionString);
-
 app.use(express.static('app'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ // to support URL-encoded bodies
