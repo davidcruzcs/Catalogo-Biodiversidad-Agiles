@@ -39,23 +39,29 @@
             //$rootScope.API_URL = 'http://localhost:5000';
         })
         .controller('MainCtrl', function ($scope) {
-
         })
-        .controller('LoginController', function ($scope, SessionServices) {
+        .controller('LoginController', function ($scope, $location, SessionServices) {
             var vm = this;
 
             vm.login = function () {
                 SessionServices.login(vm.email, vm.password)
                     .then(function (response) {
-                        console.log(response);
+                        $location.path('/species');
                     }, function (error) {
-                        console.log(error);
                         vm.showError = true;
                     });
             };
         })
-        .controller('TeacherSignUpController', function ($scope) {
-
+        .controller('UserSignUpController', function ($scope, SessionServices) {
+            var vm = this;
+            vm.signup = function () {
+                SessionServices.signup(vm.user)
+                    .then(function (response) {
+                        console.log(response);
+                    }, function (error) {
+                        console.log(error);
+                    });
+            };
         })
         .controller('SpeciesController', function ($scope, SpeciesServices) {
             var vm = this;
@@ -161,7 +167,7 @@
             };
 
             vm.specie = {
-                id: 1,
+                id: 2,
                 name: 'Lorem ipsum dolor sit amet.',
                 short_description: 'Pellentesque ullamcorper quis turpis ut porta. Cras facilisis ac lorem vulputate gravida. Fusce molestie malesuada ipsum id volutpat. Duis purus.',
                 long_description: 'Sed non laoreet nibh, sed mattis eros. Curabitur eget semper tortor. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Vivamus dignissim, risus mattis tempus convallis, lorem nisl convallis leo, in mattis ligula felis eu lorem. Nam sit amet tellus vitae eros malesuada pretium a eu ligula. Nam suscipit fermentum bibendum. Duis pharetra laoreet diam, vel porta ante faucibus in. In arcu arcu, posuere quis quam ut, molestie vehicula tellus. Cras leo quam, gravida sed ex eget, pharetra consequat ante. Phasellus suscipit tortor et mauris pellentesque luctus sed eget dolor. In suscipit consequat ligula, in molestie nisi fermentum suscipit. Cras viverra est pulvinar sapien ultricies luctus.',
@@ -199,6 +205,9 @@
                     };
                     console.log(body);
                     return $http.post($rootScope.API_URL + '/user/login', body);
+                },
+                signup: function (user) {
+                    return $http.post($rootScope.API_URL + '/user', user);
                 }
             };
         })
