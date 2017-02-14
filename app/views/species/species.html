@@ -1,0 +1,30 @@
+<div id="species" ng-controller="SpeciesController as vm">
+    <div class="row">
+        <div class="large-6 large-centered columns">
+            <form>
+                <div class="row">
+                    <div class="small-3 columns">
+                        <label for="middle-label" class="text-right middle">Filtro</label>
+                    </div>
+                    <div class="small-9 columns">
+                        <select ng-options="category as category.name for category in vm.categories track by category.id" ng-model="vm.selectedCategory"></select>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="row">
+        <div class="large-4 columns" ng-repeat="specie in vm.species">
+            <div class="card">
+                <div class="card-divider">
+                    {{vm.selectedCategory.name}}
+                </div>
+                <img src="assets/img/generic/rectangle-1.jpg">
+                <div class="card-section">
+                    <h4>{{specie.name}}</h4>
+                    <p>{{specie.short_description}}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
