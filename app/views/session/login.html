@@ -1,0 +1,32 @@
+<div id="login-wrapper" ng-controller="LoginController as vm">
+
+    <form name="loginForm" novalidate>
+        <div class="row">
+            <div class="small-12 large-4 large-centered columns">
+                <img id="login-logo" src="images/home/logo.jpg" alt="">
+            </div>
+        </div>
+        <div class="row" ng-if="vm.showError">
+            <div class="small-12 large-4 large-centered columns">
+                <div class="alert callout" data-closable>
+                    Usuario o Contraseña invalidos
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="small-12 large-4 large-centered columns">
+                <input type="email" placeholder="Correo Electrónico" ng-model="vm.email">
+            </div>
+        </div>
+        <div class="row">
+            <div class="small-12 large-4 large-centered columns">
+                <input type="password" placeholder="Contraseña" ng-model="vm.password">
+            </div>
+        </div>
+        <div class="row">
+            <div class="small-12 large-4 large-centered columns">
+                <button class="button expand" ng-disabled="loginForm.$invalid" ng-click="vm.login()">Iniciar Sesión</button>
+            </div>
+        </div>
+    </form>
+</div>

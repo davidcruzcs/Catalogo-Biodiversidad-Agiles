@@ -1,0 +1,31 @@
+<div id="teacher-sign-up" class="row" ng-controller="TeacherSignUpController as vm">
+    <div class="large-offset-8 large-4 columns">
+        <img src="logo.jpg" alt="">
+        <form name="teacherSignUpForm" novalidate>
+          
+
+            <div class="row">
+                <div class="large-12 columns">
+                    <input id="email" name="email" type="email" placeholder="Correo electrónico" ng-model="vm.teacher.email" required>
+                    <p ng-if="teacherSignUpForm.email.$invalid && teacherSignUpForm.email.$dirty" class="error">Por favor índica un correo electrónico valido</p>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="large-12 columns">
+                    <input id="password" name="password" type="password" placeholder="Contraseña" minLength="8" ng-model="vm.teacher.password" required>
+                    <p ng-if="teacherSignUpForm.password.$invalid && teacherSignUpForm.password.$dirty" class="error">Por favor índica tú contraseña, debe tener mínimo 8 cáracteres</p>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="large-12 columns">
+                    <button class="button expanded" ng-disabled="teacherSignUpForm.$invalid" ng-click="vm.signUp()">
+                        ENVIAR
+                    </button>
+                </div>
+            </div>
+
+        </form>
+    </div>
+</div>
