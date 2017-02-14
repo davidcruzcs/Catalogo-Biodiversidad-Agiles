@@ -1,0 +1,46 @@
+<div id="specie" ng-controller="SpecieController as vm">
+    <div class="row">
+        <div class="large-6 columns">
+            <a href="#" class="thumbnail"><img src="http://i164.photobucket.com/albums/u8/hemi1hemi/COLOR/COL9-6.jpg" alt="Photo of Neptune."></a>
+        </div>
+        <div class="large-6 columns">
+            <div class="card">
+                <div class="card-divider">
+                    Información general
+                </div>
+                <div class="card-section">
+                    <dl>
+                        <dt>Nombre de la Especie</dt>
+                        <dd>{{vm.specie.name}}</dd>
+                        <dt>Clasificación Taxonómica</dt>
+                        <dd>{{vm.specie.taxonomy}}</dd>
+                        <dt>Nombre Científico</dt>
+                        <dd>{{vm.specie.scientific_name}}</dd>
+                        <dt>Categoría</dt>
+                        <dd>{{vm.specie.name}}</dd>
+                    </dl>
+                </div>
+            </div>
+             <div class="card">
+                <div class="card-divider">
+                    Descripción
+                </div>
+                <div class="card-section">
+                    <p>{{vm.specie.long_description}}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="large-12 columns callout">
+            <div ng-repeat="comment in vm.specie.comments">
+                <h4>{{comment.email}}</h4>
+                <p>{{comment.comment}}</p>
+                <hr>
+            </div>            
+        </div>
+        <button class="button float-right" ng-click="vm.addComment()">
+            Agregar Comentario
+        </button>
+    </div>
+</div>

@@ -1,0 +1,44 @@
+<!doctype html>
+<html ng-app="biodiversityApp">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Biodiversidad</title>
+    <link rel="stylesheet" type="text/css" href="styles/styles.css">
+    <link rel="stylesheet" type="text/css" href="bower_components/foundation-sites/dist/css/foundation.min.css">
+    <link rel="stylesheet" type="text/css" href="bower_components/animate.css/animate.css" />
+    <link rel="stylesheet" type="text/css" href="bower_components/hover/css/hover.css" />
+    <link rel="stylesheet" type="text/css" href="/bower_components/alertify.js/themes/alertify.default.css" />
+    <link rel="stylesheet" type="text/css" href="/bower_components/alertify.js/themes/alertify.core.css" />
+</head>
+
+<body>
+    <div class="top-bar" style="margin-bottom: 16px;">
+        <div class="top-bar-left">
+            <ul class="dropdown menu" data-dropdown-menu>
+                <li class="menu-text">Biodiversidad</li>
+            </ul>
+        </div>
+        <div class="top-bar-right">
+            <ul class="menu">
+                <li><a href="#/login">Iniciar Sesión</a></li>
+                <li><a href="#/signup">Registrarse</a></li>
+            </ul>
+        </div>
+    </div>
+    <ng-view>
+
+    </ng-view>
+    <script src="bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="bower_components/angular/angular.js"></script>
+    <script src="bower_components/angular-route/angular-route.js"></script>
+    <script src="bower_components/angular-touch/angular-touch.js"></script>
+    <script src="bower_components/foundation-sites/dist/js/foundation.min.js"></script>
+    <script src="bower_components/angular-foundation-6/dist/angular-foundation.js"></script>
+
+    <script src="bower_components/alertify.js/lib/alertify.min.js"></script>
+    <script src="bower_components/angular-promise-buttons/dist/angular-promise-buttons.min.js"></script>
+    <script src="scripts/biodiversityApp.js"></script>
+</body>
+
+</html>

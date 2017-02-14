@@ -1,0 +1,44 @@
+<div id="user-sign-up" class="row" ng-controller="UserSignUpController as vm">
+    <div class="large-offset-8 large-4 columns">
+        <img src="logo.jpg" alt="">
+        <form name="userSignup" novalidate>
+            
+             <div class="row">
+                <div class="large-12 columns">
+                    <input id="names" name="names" type="text" placeholder="Nombres" ng-model="vm.user.names" required>
+                    <p ng-if="userSignup.names.$invalid && userSignup.names.$dirty" class="error">Por favor escribe tus nombres</p>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="large-12 columns">
+                    <input id="lastnames" name="lastnames" type="text" placeholder="Apellidos" ng-model="vm.user.lastnames" required>
+                    <p ng-if="userSignup.lastnames.$invalid && userSignup.lastnames.$dirty" class="error">Por favor escribe tus apellidos</p>
+                </div>
+            </div>
+
+             <div class="row">
+                <div class="large-12 columns">
+                    <input id="email" name="email" type="email" placeholder="Correo electrónico" ng-model="vm.user.email" required>
+                    <p ng-if="userSignup.email.$invalid && userSignup.email.$dirty" class="error">Por favor índica un correo electrónico valido</p>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="large-12 columns">
+                    <input id="password" name="password" type="password" placeholder="Contraseña" minLength="8" ng-model="vm.user.password" required>
+                    <p ng-if="userSignup.password.$invalid && userSignup.password.$dirty" class="error">Por favor índica tú contraseña, debe tener mínimo 8 cáracteres</p>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="large-12 columns">
+                    <button class="button expanded" ng-disabled="userSignup.$invalid" ng-click="vm.signup()">
+                        ENVIAR
+                    </button>
+                </div>
+            </div>
+
+        </form>
+    </div>
+</div>
