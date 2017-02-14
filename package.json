@@ -7,6 +7,10 @@
     "start": "node index.js",
     "postinstall": "bower install"
   },
+  "engines": {
+    "node": "6.9.4",
+    "npm": "2.1.x"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/juandavidcruzs/Catalogo-Biodiversidad-Agiles.git"
