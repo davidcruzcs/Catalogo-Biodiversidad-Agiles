@@ -1,0 +1,30 @@
+{
+  "name": "views",
+  "homepage": "https://github.com/juandavidcruzs/Catalogo-Biodiversidad-Agiles",
+  "authors": [
+    "Diego Alfonso Prieto Torres <da.prieto1@uniandes.edu.co>"
+  ],
+  "description": "",
+  "main": "",
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angular": "^1.6.2",
+    "angular-route": "^1.6.2",
+    "foundation-sites": "^6.3.0",
+    "angular-foundation-6": "^0.11.2",
+    "jquery": "^3.1.1",
+    "font-awesome": "^4.7.0",
+    "angular-touch": "^1.6.2",
+    "angular-promise-buttons": "^0.1.19",
+    "alertify.js": "^0.3.11",
+    "hover": "^2.1.0",
+    "animate.css": "^3.5.2"
+  }
+}
