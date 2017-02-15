@@ -1,4 +1,4 @@
-var express = require('express')
+wvar express = require('express')
 var app = express()
 var bodyParser = require('body-parser')
 const pg = require('pg');
@@ -10,10 +10,10 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ // to support URL-encoded bodies
     extended: true
 }));
-app.use(function(req, res, next) {
-  res.header("Access-Control-Allow-Origin", "*");
-  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-  next();
+app.use(function (req, res, next) {
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+    next();
 });
 
 app.set('port', (process.env.PORT || 5000));
@@ -180,6 +180,72 @@ app.post('/comment', function (req, res) {
 
 
 });
+
+
+app.get('/species/category/', function (req, res) {
+
+    var category_id = req.body.category_id;
+
+    const results = [];
+    // Get a Postgres client from the connection pool
+    pg.connect(connectionString, (err, client, done) => {
+        // Handle connection errors
+        if (err) {
+            done();
+            console.log(err);
+            return res.status(500).json({
+                success: false,
+                data: err
+            });
+        }
+        // SQL Query > Select Data
+        const query = client.query('SELECT * FROM species WHERE category_id=$1', [category_id]);
+        // Stream results back one row at a time
+        query.on('row', (row) => {
+            results.push(row);
+        });
+        // After all data is returned, close connection and return results
+        query.on('end', () => {
+            done();
+            res.send(results);
+        });
+    });
+
+});
+
+
+app.get('/species/comments/', function (req, res) {
+
+    var specie_id = req.body.specie_id;
+
+    const results = [];
+    // Get a Postgres client from the connection pool
+    pg.connect(connectionString, (err, client, done) => {
+        // Handle connection errors
+        if (err) {
+            done();
+            console.log(err);
+            return res.status(500).json({
+                success: false,
+                data: err
+            });
+        }
+        // SQL Query > Select Data
+        const query = client.query('SELECT * FROM comments WHERE specie_id=$1', [specie_id]);
+        // Stream results back one row at a time
+        query.on('row', (row) => {
+            results.push(row);
+        });
+        // After all data is returned, close connection and return results
+        query.on('end', () => {
+            done();
+            res.send(results);
+        });
+    });
+
+});
+
+
 
 app.listen(app.get('port'), function () {
     console.log('Node app is running on port', app.get('port'));
