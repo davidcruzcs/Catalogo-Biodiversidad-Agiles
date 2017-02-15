@@ -182,7 +182,7 @@ app.post('/comment', function (req, res) {
 });
 
 
-app.get('/species/category/', function (req, res) {
+app.post('/species/category/', function (req, res) {
 
     var category_id = req.body.category_id;
 
@@ -214,7 +214,7 @@ app.get('/species/category/', function (req, res) {
 });
 
 
-app.get('/species/comments/', function (req, res) {
+app.post('/species/comments/', function (req, res) {
 
     var specie_id = req.body.specie_id;
 
