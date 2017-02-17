@@ -1,9 +1,9 @@
 <div id="user-sign-up" class="row" ng-controller="UserSignUpController as vm">
     <div class="large-offset-8 large-4 columns">
-        <img src="logo.jpg" alt="">
+        <img src="http://especiesanimales.com/wp-content/uploads/2016/08/logo_especiesanimales.png" alt="">
         <form name="userSignup" novalidate>
-            
-             <div class="row">
+
+            <div class="row">
                 <div class="large-12 columns">
                     <input id="names" name="names" type="text" placeholder="Nombres" ng-model="vm.user.names" required>
                     <p ng-if="userSignup.names.$invalid && userSignup.names.$dirty" class="error">Por favor escribe tus nombres</p>
@@ -17,7 +17,22 @@
                 </div>
             </div>
 
-             <div class="row">
+            <div class="row">
+                <div class="large-12 columns">
+                    <select name="country" id="country" ng-model="vm.user.country" ng-options="country as country.name for country in vm.countries track by $index"
+                        required>
+                        </select>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="large-12 columns">
+                    <input id="city" name="city" type="text" placeholder="Ciudad" ng-model="vm.user.city" required>
+                    <p ng-if="userSignup.city.$invalid && userSignup.city.$dirty" class="error">Por favor escribe tu ciudad</p>
+                </div>
+            </div>
+
+            <div class="row">
                 <div class="large-12 columns">
                     <input id="email" name="email" type="email" placeholder="Correo electrónico" ng-model="vm.user.email" required>
                     <p ng-if="userSignup.email.$invalid && userSignup.email.$dirty" class="error">Por favor índica un correo electrónico valido</p>
@@ -28,6 +43,13 @@
                 <div class="large-12 columns">
                     <input id="password" name="password" type="password" placeholder="Contraseña" minLength="8" ng-model="vm.user.password" required>
                     <p ng-if="userSignup.password.$invalid && userSignup.password.$dirty" class="error">Por favor índica tú contraseña, debe tener mínimo 8 cáracteres</p>
+                </div>
+            </div>
+
+             <div class="row">
+                <div class="large-12 columns">
+                    <textarea name="interests" id="interests" cols="30" rows="10" ng-model="vm.user.interests" required></textarea>
+                    <p ng-if="userSignup.password.$invalid && userSignup.password.$dirty" class="error">Por favor índica tus intereses</p>
                 </div>
             </div>
 

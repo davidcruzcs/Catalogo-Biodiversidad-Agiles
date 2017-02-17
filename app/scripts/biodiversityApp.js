@@ -52,81 +52,65 @@
                     });
             };
         })
-        .controller('UserSignUpController', function ($scope, SessionServices) {
+        .controller('UserSignUpController', function ($scope, $location, SessionServices) {
             var vm = this;
             vm.signup = function () {
-                SessionServices.signup(vm.user)
+                var user = angular.copy(vm.user);
+                user.country = user.country.name;
+                SessionServices.signup(user)
                     .then(function (response) {
-                        console.log(response);
+                        SessionServices.login(vm.user.email, vm.user.password)
+                            .then(function (response) {
+                                $location.path('/species');
+                            });
                     }, function (error) {
                         console.log(error);
                     });
             };
+
+            function initCtrl() {
+                SessionServices.getCountires()
+                    .then(function (response) {
+                        vm.countries = response.data;
+                        console.log(vm.countries);
+                    });
+            }
+
+            initCtrl();
         })
-        .controller('SpeciesController', function ($scope, SpeciesServices) {
+        .controller('SpeciesController', function ($scope, $rootScope, $location, SpeciesServices) {
             var vm = this;
+
+            vm.selectSpecie = function (specie) {
+                $rootScope.selectedSpecie = specie;
+                $location.path('/specie');
+            };
+
+            $scope.$watch('vm.selectedCategory', function (newSelected, oldSelected) {
+                if (angular.isDefined(newSelected) && newSelected.id !== oldSelected.id) {
+                    SpeciesServices.getSpecies(newSelected.id)
+                        .then(function (response) {
+                            vm.species = response.data;
+                        });
+                }
+            });
+
             function initCtrl() {
                 SpeciesServices.getAllCategories()
                     .then(function (response) {
                         vm.categories = response.data;
                         vm.selectedCategory = vm.categories[0];
-                        vm.species = [{
-                            id: 1,
-                            name: 'Specie Name',
-                            short_description: 'short description',
-                            long_description: 'super mega long description',
-                            scientific_name: 'scientific name',
-                            taxonomy: 'taxonomy',
-                            photo: 'url'
-                        }, {
-                            id: 1,
-                            name: 'Specie Name',
-                            short_description: 'short description',
-                            long_description: 'super mega long description',
-                            scientific_name: 'scientific name',
-                            taxonomy: 'taxonomy',
-                            photo: 'url'
-                        }, {
-                            id: 1,
-                            name: 'Specie Name',
-                            short_description: 'short description',
-                            long_description: 'super mega long description',
-                            scientific_name: 'scientific name',
-                            taxonomy: 'taxonomy',
-                            photo: 'url'
-                        }, {
-                            id: 1,
-                            name: 'Specie Name',
-                            short_description: 'short description',
-                            long_description: 'super mega long description',
-                            scientific_name: 'scientific name',
-                            taxonomy: 'taxonomy',
-                            photo: 'url'
-                        }, {
-                            id: 1,
-                            name: 'Specie Name',
-                            short_description: 'short description',
-                            long_description: 'super mega long description',
-                            scientific_name: 'scientific name',
-                            taxonomy: 'taxonomy',
-                            photo: 'url'
-                        }, {
-                            id: 1,
-                            name: 'Specie Name',
-                            short_description: 'short description',
-                            long_description: 'super mega long description',
-                            scientific_name: 'scientific name',
-                            taxonomy: 'taxonomy',
-                            photo: 'url'
-                        }];
-                        console.log(vm.categories);
+                        SpeciesServices.getSpecies(vm.selectedCategory.id)
+                            .then(function (response) {
+                                vm.species = response.data;
+                            });
                     }, function (error) {
                         console.log(error);
                     });
             };
             initCtrl();
         })
-        .controller('SpecieController', function ($scope, $modal) {
+        .controller('SpecieController', function ($scope, $rootScope, $location, $modal, CommentServices) {
             var vm = this;
 
             vm.addComment = function () {
@@ -166,35 +150,15 @@
 
             };
 
-            vm.specie = {
-                id: 2,
-                name: 'Lorem ipsum dolor sit amet.',
-                short_description: 'Pellentesque ullamcorper quis turpis ut porta. Cras facilisis ac lorem vulputate gravida. Fusce molestie malesuada ipsum id volutpat. Duis purus.',
-                long_description: 'Sed non laoreet nibh, sed mattis eros. Curabitur eget semper tortor. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Vivamus dignissim, risus mattis tempus convallis, lorem nisl convallis leo, in mattis ligula felis eu lorem. Nam sit amet tellus vitae eros malesuada pretium a eu ligula. Nam suscipit fermentum bibendum. Duis pharetra laoreet diam, vel porta ante faucibus in. In arcu arcu, posuere quis quam ut, molestie vehicula tellus. Cras leo quam, gravida sed ex eget, pharetra consequat ante. Phasellus suscipit tortor et mauris pellentesque luctus sed eget dolor. In suscipit consequat ligula, in molestie nisi fermentum suscipit. Cras viverra est pulvinar sapien ultricies luctus.',
-                scientific_name: 'scientifi',
-                taxonomy: 'taxonomy',
-                photo: 'url',
-                comments: [
-                    {
-                        id: 1,
-                        email: 'email@email.com',
-                        comment: 'Sed non laoreet nibh, sed mattis eros. Curabitur eget semper tortor. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Vivamus dignissim, risus mattis tempus convallis, lorem nisl convallis leo, in mattis ligula felis eu lorem. Nam sit amet tellus vitae eros malesuada pretium a eu ligula. Nam suscipit fermentum bibendum. Duis pharetra laoreet diam, vel porta ante faucibus in. In arcu arcu, posuere quis quam ut, molestie vehicula tellus. Cras leo quam, gravida sed ex eget, pharetra consequat ante. Phasellus suscipit tortor et mauris pellentesque luctus sed eget dolor. In suscipit consequat ligula, in molestie nisi fermentum suscipit. Cras viverra est pulvinar sapien ultricies luctus.∆'
-                    },
-                    {
-                        id: 1,
-                        email: 'email@email.com',
-                        comment: 'Sed non laoreet nibh, sed mattis eros. Curabitur eget semper tortor. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Vivamus dignissim, risus mattis tempus convallis, lorem nisl convallis leo, in mattis ligula felis eu lorem. Nam sit amet tellus vitae eros malesuada pretium a eu ligula. Nam suscipit fermentum bibendum. Duis pharetra laoreet diam, vel porta ante faucibus in. In arcu arcu, posuere quis quam ut, molestie vehicula tellus. Cras leo quam, gravida sed ex eget, pharetra consequat ante. Phasellus suscipit tortor et mauris pellentesque luctus sed eget dolor. In suscipit consequat ligula, in molestie nisi fermentum suscipit. Cras viverra est pulvinar sapien ultricies luctus.∆'
-                    }, {
-                        id: 1,
-                        email: 'email@email.com',
-                        comment: 'Sed non laoreet nibh, sed mattis eros. Curabitur eget semper tortor. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Vivamus dignissim, risus mattis tempus convallis, lorem nisl convallis leo, in mattis ligula felis eu lorem. Nam sit amet tellus vitae eros malesuada pretium a eu ligula. Nam suscipit fermentum bibendum. Duis pharetra laoreet diam, vel porta ante faucibus in. In arcu arcu, posuere quis quam ut, molestie vehicula tellus. Cras leo quam, gravida sed ex eget, pharetra consequat ante. Phasellus suscipit tortor et mauris pellentesque luctus sed eget dolor. In suscipit consequat ligula, in molestie nisi fermentum suscipit. Cras viverra est pulvinar sapien ultricies luctus.∆'
-                    }, {
-                        id: 1,
-                        email: 'email@email.com',
-                        comment: 'Sed non laoreet nibh, sed mattis eros. Curabitur eget semper tortor. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Vivamus dignissim, risus mattis tempus convallis, lorem nisl convallis leo, in mattis ligula felis eu lorem. Nam sit amet tellus vitae eros malesuada pretium a eu ligula. Nam suscipit fermentum bibendum. Duis pharetra laoreet diam, vel porta ante faucibus in. In arcu arcu, posuere quis quam ut, molestie vehicula tellus. Cras leo quam, gravida sed ex eget, pharetra consequat ante. Phasellus suscipit tortor et mauris pellentesque luctus sed eget dolor. In suscipit consequat ligula, in molestie nisi fermentum suscipit. Cras viverra est pulvinar sapien ultricies luctus.∆'
-                    }
-                ]
-            };
+            if (angular.isUndefined($rootScope.selectedSpecie)) {
+                $location.path('species');
+            }
+            vm.specie = $rootScope.selectedSpecie;
+
+            CommentServices.getComments(vm.specie.id)
+                .then(function (response) {
+                    vm.specie.comments = response.data;
+                });
         })
         .factory('SessionServices', function ($rootScope, $http) {
             return {
@@ -208,6 +172,9 @@
                 },
                 signup: function (user) {
                     return $http.post($rootScope.API_URL + '/user', user);
+                },
+                getCountires: function () {
+                    return $http.get('https://restcountries.eu/rest/v1/all');
                 }
             };
         })
@@ -215,6 +182,11 @@
             return {
                 getAllCategories: function () {
                     return $http.get($rootScope.API_URL + '/categories');
+                },
+                getSpecies: function (categoryId) {
+                    return $http.post($rootScope.API_URL + '/species/category/', {
+                        category_id: categoryId
+                    });
                 }
             };
         })
@@ -222,6 +194,11 @@
             return {
                 createComment: function (comment) {
                     return $http.post($rootScope.API_URL + '/comment', comment);
+                },
+                getComments: function (specieId) {
+                    return $http.post($rootScope.API_URL + '/species/comments/', {
+                        specie_id: specieId
+                    });
                 }
             };
         });
