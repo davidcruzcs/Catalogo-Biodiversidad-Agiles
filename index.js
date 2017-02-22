@@ -1,6 +1,6 @@
-var express = require('express')
-var app = express()
-var bodyParser = require('body-parser')
+var express = require('express');
+var app = express();
+var bodyParser = require('body-parser');
 const pg = require('pg');
 const path = require('path');
 const connectionString = process.env.DATABASE_URL || 'postgres://localhost:5432/todo'
@@ -19,7 +19,7 @@ app.use(function (req, res, next) {
 app.set('port', (process.env.PORT || 5000));
 
 app.get('/', function (req, res) {
-    res.send('Hello World!')
+    res.send('Hello World!');
 });
 
 app.post('/user', function (req, res) {
@@ -32,6 +32,25 @@ app.post('/user', function (req, res) {
     var interests = req.body.interests;
     var password = req.body.password;
 
+    if (!names) {
+         throw Error('Debe enviar el nombre del usuario.');
+    }
+
+    if (!country) {
+         throw Error('Debe enviar el pais del usuario.');
+    }
+
+    if (!city) {
+         throw Error('Debe enviar la ciudad del usuario.');
+    }
+
+    if (!email) {
+         throw Error('Debe enviar el email del usuario.');
+    }
+
+    if (!password) {
+         throw Error('Debe enviar el password del usuario.');
+    }
 
     // Get a Postgres client from the connection pool
     pg.connect(connectionString, (err, client, done) => {
@@ -64,6 +83,26 @@ app.post('/user/update', function (req, res) {
     var interests = req.body.interests;
     var password = req.body.password;
 
+    if (!names) {
+         throw Error('Debe enviar el nombre del usuario.');
+    }
+
+    if (!country) {
+         throw Error('Debe enviar el pais del usuario.');
+    }
+
+    if (!city) {
+         throw Error('Debe enviar la ciudad del usuario.');
+    }
+
+    if (!email) {
+         throw Error('Debe enviar el email del usuario.');
+    }
+
+    if (!password) {
+         throw Error('Debe enviar el password del usuario.');
+    }
+
     // Get a Postgres client from the connection pool
     pg.connect(connectionString, (err, client, done) => {
         // Handle connection errors
@@ -88,6 +127,10 @@ app.post('/user/login', function (req, res) {
 
     var email = req.body.email;
     var password = req.body.password;
+
+    if (!email || !password) {
+         throw Error('Debe enviar un email y un password.');
+    }
 
     var results = [];
 
